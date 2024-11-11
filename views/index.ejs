@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Finance App</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 20px;
+    }
+    h1 {
+      color: #333;
+      text-align: center;
+    }
+    .balance {
+      font-size: 2em;
+      text-align: center;
+      margin-bottom: 20px;
+      color: #27ae60;
+    }
+    .transactions-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+    .transactions-table th, .transactions-table td {
+      padding: 12px;
+      text-align: center;
+      border: 1px solid #ddd;
+    }
+    .transactions-table th {
+      background-color: #f2f2f2;
+    }
+    .form-container {
+      text-align: center;
+      margin: 20px;
+    }
+    .form-container input, .form-container select, .form-container button {
+      padding: 10px;
+      margin: 10px;
+      font-size: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Finance Tracking</h1>
+    <div class="balance">
+      <strong>Balance: </strong> $<%= balance %>
+    </div>
+
+    <table class="transactions-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Type</th>
+          <th>Amount</th>
+          <th>Description</th>
+          <th>Date</th>
+          <th>Month</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% transactions.forEach(function(transaction) { %>
+          <tr>
+            <td><%= transaction.id %></td>
+            <td><%= transaction.type %></td>
+            <td><%= transaction.amount %></td>
+            <td><%= transaction.description %></td>
+            <td><%= transaction.date %></td>
+            <td><%= transaction.month %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+
+    <div class="form-container">
+      <h2>Add Transaction</h2>
+      <form action="/add" method="POST">
+        <input type="number" name="amount" placeholder="Amount" required>
+        <input type="text" name="description" placeholder="Description" required>
+        <input type="date" name="date" required>
+        <input type="text" name="month" placeholder="Month (e.g., January)" required>
+        <select name="type" required>
+          <option value="salary">Salary</option>
+          <option value="expense">Expense</option>
+        </select>
+        <button type="submit">Add</button>
+      </form>
+    </div>
+
+    <div class="form-container">
+      <a href="/export"><button>Download Excel</button></a>
+    </div>
+  </div>
+</body>
+</html>
